@@ -30,14 +30,8 @@ def get_db_connection():
         # Railways Cloud Environment
         conn = psycopg2.connect(DATABASE_URL, sslmode="require")
     else:
-        # Local Environment (Fallback to local Postgres if needed, or update connection details)
-        conn = psycopg2.connect(
-            dbname=os.getenv("DB_NAME", "fakebook"),
-            user=os.getenv("DB_USER", "postgres"),
-            password=os.getenv("DB_PASSWORD", "postgres"),
-            host=os.getenv("DB_HOST", "localhost"),
-            port=os.getenv("DB_PORT", "5432")
-        )
+        # Local Environment Fallback
+        conn = psycopg2.connect("dbname=fakebook user=postgres password=postgres host=localhost port=5432")
     return conn
 
 # Database Tables Initialization
@@ -618,7 +612,7 @@ async def handle_view_my_posts(update: Update, context: ContextTypes.DEFAULT_TYP
     user_id = query.from_user.id
 
     if not await check_channel_member(context.bot, user_id):
-        await query.answer("⚠️ Channel ကို အရင် Join ပေးပါ bro!", show_alert=True)
+        await query.answer("⚠️️ Channel ကို အရင် Join ပေးပါ bro!", show_alert=True)
         return
 
     await query.answer()
